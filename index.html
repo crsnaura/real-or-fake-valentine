@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine Day 💌</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(180deg, #ffd6e7, #ffeef5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container { text-align: center; padding: 20px; }
+
+    .mailbox {
+      width: 180px;
+      cursor: pointer;
+      animation: shake 2s infinite;
+      transition: transform 0.4s ease;
+    }
+
+    .mailbox.open { transform: scale(1.1) rotate(-5deg); animation: none; }
+
+    @keyframes shake {
+      0% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+      100% { transform: rotate(-2deg); }
+    }
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      width: 320px;
+      max-height: 360px;
+      overflow-y: auto;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .typing {
+      border-right: 3px solid pink;
+      white-space: pre-wrap;
+      overflow: hidden;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% { border-color: transparent; }
+      25%, 75% { border-color: pink; }
+    }
+
+    input {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 12px;
+      border: none;
+      width: 200px;
+      text-align: center;
+      background: #ffeef5;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 14px;
+      background: #ff8fb1;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .result { margin-top: 15px; font-size: 14px; color: #444; min-height: 40px; }
+
+    .profile-img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-top: 10px;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .playlist {
+      margin-top: 20px;
+      background: #fff0f6;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .playlist-item { cursor: pointer; margin: 4px 0; }
+
+    .gallery { margin-top: 25px; }
+
+    .gallery img {
+      width: 80px; height: 80px; object-fit: cover;
+      border-radius: 15px; margin: 5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .confetti {
+      position: fixed; top: -10px; width: 10px; height: 10px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>You’ve got a Valentine message 💌</h2>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" class="mailbox" id="mailbox" onclick="openMail()" />
+
+    <div class="message" id="letter">
+      <p id="mainText" class="typing"></p>
+
+      <input type="text" id="nameInput" placeholder="Tulis namamu..." />
+      <br />
+      <button onclick="showMessage()">Buka pesan khusus 💌</button>
+
+      <img id="profileImg" class="profile-img" />
+      <div class="result typing" id="personalMsg"></div>
+
+      <!-- PLAYLIST -->
+      <div class="playlist">
+        <b>Real or Fake Playlist 🎧</b>
+        <div class="playlist-item" onclick="playSong(0)">1. Lover – Taylor Swift</div>
+        <div class="playlist-item" onclick="playSong(1)">2. You're On Your Own, Kid – Taylor Swift</div>
+        <div class="playlist-item" onclick="playSong(2)">3. Long Live – Taylor Swift</div>
+        <div class="playlist-item" onclick="playSong(3)">4. Love, Maybe – MeloMance</div>
+        <div class="playlist-item" onclick="playSong(5)">5. My Sea – IU</div>
+      </div>
+
+      <audio id="audioPlayer" autoplay></audio>
+
+      <div class="gallery">
+        <p>Kenangan kecil kita 📸</p>
+        <img src="foto1.jpg" />
+        <img src="foto2.jpg" />
+        <img src="foto3.jpg" />
+        <img src="foto4.jpg" />
+        <img src="foto5.jpg" />
+        <img src="foto6.jpg" />
+        <img src="foto7.jpg" />
+        <img src="foto8.jpg" />
+        <img src="foto9.jpg" />
+        <img src="foto10.jpg" />
+        <img src="foto11.jpg" />
+        <img src="foto12.jpg" />
+        <img src="foto13.jpg" />
+        <img src="foto14.jpg" />
+        <img src="foto15.jpg" />
+        <img src="foto16.jpg" />
+        <img src="foto17.jpg" />
+        <img src="foto18.jpg" />
+        <img src="foto19.jpg" />
+        <img src="foto20.jpg" />
+        <img src="foto21.jpg" />
+        <img src="foto22.jpg" />
+        <img src="foto23.jpg" />
+        <img src="foto24.jpg" />
+        <img src="foto25.jpg" />
+        <img src="foto26.jpg" />
+        <img src="foto27.jpg" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const songs = [
+      "song1.mp3",
+      "song2.mp3",
+      "song3.mp3",
+      "song4.mp3",
+      "song5.mp3"
+    ];
+
+    let currentSong = 0;
+
+    const mainMessage = `Hai Real or Fake 💖\n\npercayalah ini cuma buat latihan ngodingku, but thanks ya guys sudah mau menjadi teman gweh yang paling random.\nTempat ketawa, curhat, cerita ga jelas, sampai momen kecil yang ternyata jadi kenangan 🤍\n\nSukses terus gesss ✨\n\nHappy Valentine, gw tau kalian ga ada yang ngucapin kan 🫶`;
+
+    function typeText(element, text, speed = 35) {
+      element.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        element.textContent += text[i];
+        i++;
+        if (i >= text.length) clearInterval(interval);
+      }, speed);
+    }
+
+    function openMail() {
+      document.getElementById('letter').style.display = 'block';
+      document.getElementById('mailbox').classList.add('open');
+      typeText(document.getElementById('mainText'), mainMessage);
+      launchConfetti();
+      startPlaylist();
+    }
+
+    function startPlaylist() {
+      const player = document.getElementById('audioPlayer');
+      player.src = songs[currentSong];
+      player.play();
+
+      player.onended = () => {
+        currentSong = (currentSong + 1) % songs.length;
+        player.src = songs[currentSong];
+        player.play();
+      };
+    }
+
+    function playSong(index) {
+      currentSong = index;
+      const player = document.getElementById('audioPlayer');
+      player.src = songs[currentSong];
+      player.play();
+    }
+
+    function showMessage() {
+      const name = document.getElementById('nameInput').value.toLowerCase();
+      const msgEl = document.getElementById('personalMsg');
+      const imgEl = document.getElementById('profileImg');
+
+      const data = {
+        carissa: { text: 'Carissa 🤍 kamu itu pusat hangatnya grup ini. Kita sayang kamu banyak 💗', img: 'carissa.jpg' },
+        tamara: { text: 'Tamaraaa 🌸 heiii happy valentinee thanks yapp sudah menemani gw selama iniii, menangis, galau diputusin dll 😭🤍 sahabat terbaik lah, asikk, paling rajin ngingetin sholat ga kek maliq yang istighfar itu, btw sukses yo tam, dolen berdua yokkk!!!', img: 'tamara.jpg' },
+        maliq: { text: 'Maliq si paling slay 💅 trimss yappp, happy valentine brou, thanks sudah membolehkan kita ber4 make mobil mu terus2 an buat main, temen sebangku gw ini, btw buruan dapet cewe yaaa, pacaran asik kok, asliii, liq shoalt liq hehehe 🤍', img: 'maliq.jpg' },
+        reyfan: { text: 'Reyfan si paling kerja keras 🔥 kerja mulu, istirahat napa bang, tapi at least cape mu dadi duek seh, happy valentine yupp, btw cari cewe kono 🤍', img: 'reyfan.jpg' }
+      };
+
+      if (data[name]) {
+        typeText(msgEl, data[name].text);
+        imgEl.src = data[name].img;
+        imgEl.style.display = 'block';
+      } else {
+        typeText(msgEl, 'kelen bagian paling penting dari Real or Fake 💞');
+        imgEl.style.display = 'none';
+      }
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 40; i++) {
+        const c = document.createElement('div');
+        c.classList.add('confetti');
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.animationDuration = 2 + Math.random() * 3 + 's';
+        c.style.background = ['#ff8fb1','#ffd6e7','#ffc2d1'][Math.floor(Math.random()*3)];
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+</html>
